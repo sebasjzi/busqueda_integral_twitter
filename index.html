@@ -1,0 +1,143 @@
+<!--
+
+    Búsqueda integral
+
+    Busca todas las posibilidades de textos enmascarados para Twitter
+
+    1 = I
+    2 = Z
+    3 = E
+    4 = A
+    5 = S
+    6 = G
+    7 = T
+    8 = B
+    9 = G
+    0 = O
+
+    Ejemplo: Boric
+    Posibles: Boric - B0ric - B0r1c - 
+    Resultado final: https://twitter.com/search?q=(Boric%20OR%20B0ric%20OR%20B0r1c)
+
+    Adicional:
+    - Añadir radiobuttons que indiquen si quiere ver primero "Destacados" o "Más reciente"
+
+-->
+
+<!DOCTYPE HTML>
+
+<html>
+    <head>
+        <title>Búsqueda integral por Twitter</title>
+        <meta charset="UTF-8">
+        <style>
+            body{
+                background-color: black;
+                color: rgb(231,233,234);
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            }
+        
+            .tw-button{
+                background-color:  rgb(91,209,215);
+                color: white;
+                font-weight: bold;
+                box-sizing: border-box;
+                width: 225px;
+                border: none;
+                border-radius: 15px;
+                padding: 10px 10px 10px 10px;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h2>Búsqueda integral por Twitter</h2>
+        <p>Escriba el texto de búsqueda y encuentre todos los resultados posibles:</p>        
+        <p>
+            <input type="text" name="TXT_buscar" id="TXT_buscar" placeholder="Escriba la palabra aquí">
+        </p>
+        <p>
+            <label for="CHK_inclpalabra">
+                <input type="checkbox" id="CHK_inclpalabra" name="CHK_inclpalabra" value="yes"> Incluir palabra 
+             </label>
+        </p>
+        <p>
+            <button class="tw-button" id="BTN_buscar" name="BTN_buscar" type="submit">Buscar</button>
+        </p>
+        <script>
+            document.getElementById("BTN_buscar").onclick = () => {
+                entrada = document.getElementById("TXT_buscar").value;
+                valores = [entrada];
+                EncontrarValores(valores);
+                ruta = GenerarRuta(valores);
+                window.open(ruta, '_blank').focus();
+            };
+
+            /// Función que permite generar nuevos valores para búsqueda
+            ///
+            /// Entrada : valores = arreglo de string que incluye los valores a buscar
+            /// Salida  : void
+            function EncontrarValores(valores){
+                ciclo = 0;
+                nuevoValor = valores[0].replace(/o|ó/gi,"0");
+                if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+                nuevoValor = valores[0].replace(/i|í/gi,"1");
+                if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+                nuevoValor = valores[0].replace(/e|é/gi,"3");
+                if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+                nuevoValor = valores[0].replace(/a|á/gi,"4");
+                if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+
+                cantidad = 0;
+                for(var i=0;i<valores[0].length;i++){
+                    if(["a","e","i","o"].includes(valores[0][i])){
+                        cantidad++;
+                    }
+                }
+
+                for (var i=0;i<valores.length;i++){
+                    for(var j=0;j<cantidad;j++){ 
+                        nuevoValor = valores[j].replace(/o|ó/gi,"0");
+                        if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+                        nuevoValor = valores[j].replace(/i|í/gi,"1");
+                        if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+                        nuevoValor = valores[j].replace(/e|é/gi,"3");
+                        if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+                        nuevoValor = valores[j].replace(/a|á/gi,"4");
+                        if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+                    }
+                }
+            }
+
+            /// Función que permite generar una ruta de búsqueda avanzada para Twitter
+            ///
+            /// Entrada : valores = arreglo de string que incluye los valores a buscar
+            /// Salida  : string de ruta
+            function GenerarRuta(valores){
+                ruta = "https://twitter.com/search?q=(";
+                if (document.getElementById("CHK_inclpalabra").checked){
+                    ruta += valores[0];
+                    if (valores.length > 1) ruta += "%20OR%20";
+                };
+                if (valores.length > 1) {
+                    for(var i=1;i<valores.length;i++){
+                        ruta += valores[i]
+                        if (i!=valores.length-1){
+                            ruta += "%20OR%20"
+                        }
+                    }
+                };
+                ruta += ")";
+                return ruta;
+            }
+            // function load() {
+            //     var el = document.getElementById("TXT_buscar");
+            //     el.addEventListener("click", modifyText, false);
+            // }
+
+            // document.addEventListener("DOMContentLoaded", load, false);
+    </script>
+
+    </body>
+
+</html>
