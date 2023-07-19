@@ -16,7 +16,7 @@
     0 = O
 
     Ejemplo: Boric
-    Posibles: Boric - B0ric - B0r1c - 
+    Posibles: Boric - B0ric - B0r1c - ...
     Resultado final: https://twitter.com/search?q=(Boric%20OR%20B0ric%20OR%20B0r1c)
 
     Adicional:
@@ -24,7 +24,7 @@
 
 -->
 
-<!DOCTYPE HTML>
+<!DOCTYPE HTML> 
 
 <html>
     <head>
@@ -38,7 +38,7 @@
             }
         
             .tw-button{
-                background-color:  rgb(91,209,215);
+                background-color: rgb(91,209,215);
                 color: white;
                 font-weight: bold;
                 box-sizing: border-box;
@@ -46,6 +46,10 @@
                 border: none;
                 border-radius: 15px;
                 padding: 10px 10px 10px 10px;
+            }
+
+            .text-credits{
+                font-style: italic;
             }
         </style>
     </head>
@@ -59,10 +63,13 @@
         <p>
             <label for="CHK_inclpalabra">
                 <input type="checkbox" id="CHK_inclpalabra" name="CHK_inclpalabra" value="yes"> Incluir palabra 
-             </label>
+             </label> 
         </p>
         <p>
             <button class="tw-button" id="BTN_buscar" name="BTN_buscar" type="submit">Buscar</button>
+        </p>
+        <p>
+            <span class="text-credits">2023 sebasjzi</span>
         </p>
         <script>
             document.getElementById("BTN_buscar").onclick = () => {
@@ -78,15 +85,15 @@
             /// Entrada : valores = arreglo de string que incluye los valores a buscar
             /// Salida  : void
             function EncontrarValores(valores){
-                ciclo = 0;
-                nuevoValor = valores[0].replace(/o|ó/gi,"0");
-                if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
-                nuevoValor = valores[0].replace(/i|í/gi,"1");
-                if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
-                nuevoValor = valores[0].replace(/e|é/gi,"3");
-                if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
-                nuevoValor = valores[0].replace(/a|á/gi,"4");
-                if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+                // ciclo = 0;
+                // nuevoValor = valores[0].replace(/o|ó/gi,"0");
+                // if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+                // nuevoValor = valores[0].replace(/i|í/gi,"1");
+                // if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+                // nuevoValor = valores[0].replace(/e|é/gi,"3");
+                // if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
+                // nuevoValor = valores[0].replace(/a|á/gi,"4");
+                // if (!valores.includes(nuevoValor)) valores.push(nuevoValor);
 
                 cantidad = 0;
                 for(var i=0;i<valores[0].length;i++){
